@@ -35,8 +35,8 @@ pipeline {
 
         stage('Deploy with Docker Compose') {
             steps {
-                sh 'docker compose down'
-                sh 'docker compose up -d'
+                sh 'docker rm -f mysql-db spring-backend || true'
+                sh 'docker compose up -d --build'
             }
         }
     }
