@@ -19,10 +19,7 @@ pipeline {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     dir('backend') {
-                        script {
-                            def mvnHome = tool 'M2_HOME'
-                            sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.projectKey=DevOps-AppGestionDesProjets -Dsonar.projectName=DevOps-AppGestionDesProjets -Dsonar.sources=src"
-                        }
+                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar -Dsonar.projectKey=DevOps-AppGestionDesProjets -Dsonar.projectName=DevOps-AppGestionDesProjets'
                     }
                 }
             }
