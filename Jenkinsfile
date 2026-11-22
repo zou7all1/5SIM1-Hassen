@@ -6,19 +6,8 @@ pipeline {
         jdk 'JAVA_HOME'
     }
 
-    environment {
-        // This tells Maven where to find SonarQube
-        SONAR_HOST_URL = 'http://localhost:9000'
-    }
-
     stages {
-        stage('Checkout') {
-            steps {
-                echo 'Code pulled from Git'
-            }
-        }
-        
-        stage('Build & Test Backend') {
+        stage('Build Backend') {
             steps {
                 dir('backend') {
                     sh 'mvn clean package -DskipTests'
@@ -28,20 +17,12 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                // This runs the SonarQube scanner
                 withSonarQubeEnv('SonarQube') {
                     dir('backend') {
-                        sh 'mvn sonar:sonar'
+                        // Explicitly use the Maven tool
+                        def mvnHome = tool 'M2_HOME'
+                        sh "${mvnHome}/bin/mvn sonar:sonar -Dsonar.projectKey=DevOps-AppGestionDesProjets -Dsonar.projectName=DevOps-AppGestionDesProjets -Dsonar.sources=src"
                     }
-                }
-            }
-        }
-        
-        stage('Build Frontend') {
-            steps {
-                dir('frontend') {
-                    sh 'npm install'
-                    sh 'npm run build'
                 }
             }
         }
