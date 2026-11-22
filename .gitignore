@@ -1,0 +1,22 @@
+# Java / Spring Boot (Backend)
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+HELP.md
+
+# IntelliJ / Eclipse
+.idea/
+*.iws
+*.iml
+*.ipr
+.classpath
+.project
+.settings/
+
+# Node / Angular (Frontend)
+node_modules/
+dist/
+.angular/
+npm-debug.log
+yarn-error.log
